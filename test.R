@@ -1,14 +1,3 @@
-## Those functions handle a custom matrix type which is
-## capable of caching a previously calculated inverse and
-## re-using its value for improving performance if called
-## several times
-
-
-## Create function for creating our custom-type of matrix
-## Methods:
-##    - set/get: modify/obtain the stored matrix. Setting a new matrix erases the cached inverse value
-##    - setinv/getinv: modify/obtain the stored inverse matrix.
-##
 makeCacheMatrix <- function(x = matrix()) {
   inv <- NULL
   set <- function(y){
@@ -38,3 +27,18 @@ cacheSolve <- function(x, ...) {
   x$setinv(inverse)
   inverse
 }
+
+
+
+
+NCols=1000
+NRows=1000
+myMat<-matrix(runif(NCols*NRows), ncol=NCols) 
+
+
+matriz<-makeCacheMatrix(myMat)
+system.time(solve(myMat))
+system.time(cacheSolve(matriz))
+system.time(cacheSolve(matriz))
+
+
